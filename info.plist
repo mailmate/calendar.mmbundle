@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>contactEmailRot13</key>
+	<string>zz-ohaqyrf@sereba.pbz</string>
+	<key>contactName</key>
+	<string>Benny Kjær Nielsen</string>
+	<key>description</key>
+	<string>Integration with Calendar.</string>
+	<key>name</key>
+	<string>Calendar</string>
+	<key>uuid</key>
+	<string>BB1E2F96-30F4-4F3B-BD62-7818F1366F0A</string>
+</dict>
+</plist>
