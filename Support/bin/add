@@ -9,22 +9,11 @@ tmpfilename = `mktemp -t add_input`.chop
 
 File.open(tmpfilename, "w+") do |tmpfile|
 
-  # Something like this could be used to use AppleScript to select a default calendar if none exists
-  # tell application id "com.apple.iCal"
-  #   activate
-  #   set theCalendars to name of calendars whose writable is true
-  #   set res to choose from list theCalendars with title "Please select a source calendar" without empty selection allowed
-  #   if res is false then
-  #     return ""
-  #   end if
-  #   
-  #   return item 1 of res
-  # end tell
-
   # Calendar
   calendar = `defaults read com.freron.MailMate MmDefaultCalendarName`
   if $?.exitstatus != 0 || calendar.empty?
-    calendar = "Work"
+    calendar = `#{ENV['MM_BUNDLE_SUPPORT']}/bin/select_calendar`
+    calendar = "Work" if calendar == ""
   end
   tmpfile.puts(calendar)
 

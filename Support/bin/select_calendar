@@ -1,0 +1,18 @@
+#!/bin/bash
+
+calendar=`defaults read com.freron.MailMate MmDefaultCalendarName`
+
+osascript <<END
+tell application id "com.apple.iCal"
+	activate
+	set theCalendars to name of calendars whose writable is true
+	set res to choose from list theCalendars with title "Please select a default calendar" default items { "${calendar}" } without empty selection allowed
+	if res is not false then
+		do shell script "defaults write com.freron.MailMate MmDefaultCalendarName -string '" & item 1 of res & "'"
+		return item 1 of res
+	end if
+	return ""
+end tell
+END
+
+-- defaults read com.freron.MailMate MmDefaultCalendarName

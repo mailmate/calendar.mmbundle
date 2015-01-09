@@ -1,4 +1,7 @@
-#!/usr/bin/osascript
+#!/bin/bash
+
+# Using osascript via bash. For some reason, using osascript directly prevents Calendar.app from being launched.
+osascript <<END
 
 on getDateFromString(dateText)
 	set AppleScript's text item delimiters to {" "}
@@ -28,7 +31,8 @@ end getDateFromString
 on run argv
 	try
 
-		set theFilename to item 1 of argv
+		set theFilename to "$1"
+		-- set theFilename to item 1 of argv
 		set theLines to every paragraph of (do shell script ("cat " & theFilename))
 		set theCalendarStr to item 1 of theLines -- FIXME: Change this to use the uid of the calendar instead
 		set theSubject to item 2 of theLines
@@ -47,8 +51,11 @@ on run argv
 
 		tell application id "com.apple.iCal" to tell (first calendar whose name is theCalendarStr)
 			set theEvent to make new event with properties {start date:theStartDate, description:theNote, summary:theSubject, url:theMessageURL}
-			-- reload calendars
 			show theEvent
+			tell application id "com.apple.iCal" to activate
+			-- tell application "iCal" to reload calendars -- This appears to never work (at least on Yosemite)
+			delay 0.1
+			tell application "System Events" to keystroke "r" using {command down} -- Workaround which doesn't seem to always work (and neither does hitting ⌘R in Calendar)
 		end tell
 	on error errMsg number eNum
 		tell application id "com.apple.iCal"
@@ -64,3 +71,6 @@ on run argv
 	--  status (cancelled/confirmed/none/tentative) : The event status.
 	--  location (text) : This is the event location.
 end run
+
+END
+
