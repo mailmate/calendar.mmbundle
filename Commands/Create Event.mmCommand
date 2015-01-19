@@ -1,5 +1,8 @@
 {
-	name          = 'Select Default Calendar...';
-	command       = '#!/bin/bash\n"${MM_BUNDLE_SUPPORT}/bin/select_calendar"';
-	uuid          = '08A525A6-D49E-4786-BC5B-CD2E5088B05A';
+	name          = 'Create Event...';
+	input         = 'canonical';
+	environment   = 'MM_SUBJECT=${subject.prefix:+${subject.prefix} }${subject.blob:+[${subject.blob}] }${subject.body}\nMM_MESSAGE_ID=${message-id.split}\n';
+	command       = '#!/bin/bash\n"${MM_BUNDLE_SUPPORT}/bin/add"';
+	keyEquivalent = "^C";
+	uuid          = '60AA2588-D44D-44B5-8896-1CBE3B89D8FF';
 }
