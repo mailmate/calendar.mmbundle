@@ -14,5 +14,3 @@ tell application id "com.apple.iCal"
 	return ""
 end tell
 END
-
--- defaults read com.freron.MailMate MmDefaultCalendarName
