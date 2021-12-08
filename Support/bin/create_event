@@ -47,15 +47,12 @@ on run argv
 		-- set theNote to items 4 thru end of theLines as string
 		set theNote to ""
 
-		set theStartDate to getDateFromString(theDate)
+		set theParsedDate to getDateFromString(theDate)
 
 		tell application id "com.apple.iCal" to tell (first calendar whose name is theCalendarStr)
-			set theEvent to make new event with properties {start date:theStartDate, description:theNote, summary:theSubject, url:theMessageURL}
+			set theEvent to make new event with properties {start date:theParsedDate, end date:theParsedDate, description:theNote, summary:theSubject, url:theMessageURL}
 			show theEvent
 			tell application id "com.apple.iCal" to activate
-			-- tell application "iCal" to reload calendars -- This appears to never work (at least on Yosemite)
-			delay 0.1
-			tell application "System Events" to keystroke "r" using {command down} -- Workaround which doesn't seem to always work (and neither does hitting ⌘R in Calendar)
 		end tell
 	on error errMsg number eNum
 		tell application id "com.apple.iCal"
