@@ -39,15 +39,15 @@ on run argv
 		set theMessageURL to item 3 of theLines
 		set theDate to item 4 of theLines
 		if theDate = ""
-			beep
-			return
+			-- Failing to find a date currently means we take the current date
+			set theParsedDate to current date
+		else
+			set theParsedDate to getDateFromString(theDate)
 		end if
 
 		-- set Applescript's text item delimiters to "\n"
 		-- set theNote to items 4 thru end of theLines as string
 		set theNote to ""
-
-		set theParsedDate to getDateFromString(theDate)
 
 		tell application id "com.apple.iCal" to tell (first calendar whose name is theCalendarStr)
 			set theEvent to make new event with properties {start date:theParsedDate, end date:theParsedDate, description:theNote, summary:theSubject, url:theMessageURL}
